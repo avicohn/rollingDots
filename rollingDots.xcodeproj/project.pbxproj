@@ -40,6 +40,7 @@
 		82EA18EF1A8AC332001BD367 /* rollingDotsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = rollingDotsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		82EA18F41A8AC332001BD367 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82EA18F51A8AC332001BD367 /* rollingDotsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = rollingDotsTests.m; sourceTree = "<group>"; };
+		82EA19021A8AD2C5001BD367 /* dotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dotView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +64,7 @@
 		82EA18CD1A8AC331001BD367 = {
 			isa = PBXGroup;
 			children = (
+				82EA19021A8AD2C5001BD367 /* dotView.h */,
 				82EA18D81A8AC332001BD367 /* rollingDots */,
 				82EA18F21A8AC332001BD367 /* rollingDotsTests */,
 				82EA18D71A8AC332001BD367 /* Products */,

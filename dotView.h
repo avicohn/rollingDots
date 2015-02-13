@@ -20,3 +20,12 @@
 -(void)update; //method to refresh display
 
 @end
+
+-(id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if(self) {
+        _isStatic = YES;
+        _mass = 1;
+    }
+    return self;
+}

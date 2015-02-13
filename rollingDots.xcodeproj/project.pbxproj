@@ -14,6 +14,7 @@
 		82EA18E71A8AC332001BD367 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82EA18E61A8AC332001BD367 /* Images.xcassets */; };
 		82EA18EA1A8AC332001BD367 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82EA18E81A8AC332001BD367 /* LaunchScreen.xib */; };
 		82EA18F61A8AC332001BD367 /* rollingDotsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 82EA18F51A8AC332001BD367 /* rollingDotsTests.m */; };
+		82EA19061A8D392A001BD367 /* BallBehavior.m in Sources */ = {isa = PBXBuildFile; fileRef = 82EA19051A8D392A001BD367 /* BallBehavior.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +42,8 @@
 		82EA18F41A8AC332001BD367 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82EA18F51A8AC332001BD367 /* rollingDotsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = rollingDotsTests.m; sourceTree = "<group>"; };
 		82EA19021A8AD2C5001BD367 /* dotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dotView.h; sourceTree = "<group>"; };
+		82EA19041A8D392A001BD367 /* BallBehavior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallBehavior.h; sourceTree = "<group>"; };
+		82EA19051A8D392A001BD367 /* BallBehavior.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallBehavior.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +67,8 @@
 		82EA18CD1A8AC331001BD367 = {
 			isa = PBXGroup;
 			children = (
+				82EA19041A8D392A001BD367 /* BallBehavior.h */,
+				82EA19051A8D392A001BD367 /* BallBehavior.m */,
 				82EA19021A8AD2C5001BD367 /* dotView.h */,
 				82EA18D81A8AC332001BD367 /* rollingDots */,
 				82EA18F21A8AC332001BD367 /* rollingDotsTests */,
@@ -83,8 +88,6 @@
 		82EA18D81A8AC332001BD367 /* rollingDots */ = {
 			isa = PBXGroup;
 			children = (
-				82EA18DD1A8AC332001BD367 /* AppDelegate.h */,
-				82EA18DE1A8AC332001BD367 /* AppDelegate.m */,
 				82EA18E01A8AC332001BD367 /* ViewController.h */,
 				82EA18E11A8AC332001BD367 /* ViewController.m */,
 				82EA18E31A8AC332001BD367 /* Main.storyboard */,
@@ -98,6 +101,8 @@
 		82EA18D91A8AC332001BD367 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				82EA18DD1A8AC332001BD367 /* AppDelegate.h */,
+				82EA18DE1A8AC332001BD367 /* AppDelegate.m */,
 				82EA18DA1A8AC332001BD367 /* Info.plist */,
 				82EA18DB1A8AC332001BD367 /* main.m */,
 			);
@@ -221,6 +226,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82EA19061A8D392A001BD367 /* BallBehavior.m in Sources */,
 				82EA18E21A8AC332001BD367 /* ViewController.m in Sources */,
 				82EA18DF1A8AC332001BD367 /* AppDelegate.m in Sources */,
 				82EA18DC1A8AC332001BD367 /* main.m in Sources */,
@@ -416,6 +422,7 @@
 				82EA18FB1A8AC332001BD367 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		82EA18FC1A8AC332001BD367 /* Build configuration list for PBXNativeTarget "rollingDotsTests" */ = {
 			isa = XCConfigurationList;
@@ -424,6 +431,7 @@
 				82EA18FE1A8AC332001BD367 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

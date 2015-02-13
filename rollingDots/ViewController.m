@@ -19,6 +19,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //init max values to 0
+    currentMaxAccX = 0;
+    currentMaxAccY = 0;
+    currentMaxAccZ = 0;
+    
+    currentMaxRotX = 0;
+    currentMaxRotY = 0;
+    currentMaxRotZ = 0;
+    
     //to enable multiple touches
     [self.view setMultipleTouchEnabled:YES];
 
@@ -40,12 +50,61 @@
                     NSLog(@"%@", error);
                 }
         }];
+    //gyro measures data in rotations/second
     [self.motionManager startGyroUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^(CMGyroData *gyroData, NSError *error) {
         [self outputRotationData:gyroData.rotationRate];
     }];
     
+}
+
+#pragma mark function to check if ball is in top 10% of screen
+
+#pragma mark function to check if ball is in bottom 20% of screen
+
+#pragma mark function to convert GPS coordinates to real-life address
+
+/*
+-(void)update:(CFTimeInterval)currentTime {
     
+    // Called before each frame is rendered
     
+    //set min and max bounderies
+    float maxY = screenHeight - (self.ball.size.width/2);
+    float minY = 0 + (self.ball.size.width/2);
+    
+    float maxX = screenWidth - (self.ball.size.height/2);
+    float minX = 0 + (self.ball.size.height/2);
+    
+    float newY = 0;
+    float newX = 0;
+    //left and right tilt
+    if(currentMaxAccelX > 0.05){
+        newX = currentMaxAccelX * -10;
+    }
+    else if(currentMaxAccelX < -0.05){
+        newX = currentMaxAccelX*-10;
+    }
+    else{
+        newX = currentMaxAccelX*-10;
+    }
+    //up and down tilt
+    newY = currentMaxAccelY *10;
+    
+    newX = MIN(MAX(newX+self.ball.position.x,minY),maxY);
+    newY = MIN(MAX(newY+self.ball.position.y,minX),maxX);
+    
+    self.ball.position = CGPointMake(newX, newY);
+    
+}
+*/
+
+
+- (void)updateDotPositionFromMotionManager {
+    CMAccelerometerData* data = _motionManager.accelerometerData;
+    if (fabs(data.acceleration.x) > 0.2) {
+        //NSLog(@"acceleration value = %f",data.acceleration.x);
+        //[_ship.physicsBody applyForce:CGVectorMake(0.0, 40.0 * data.acceleration.x)];
+    }
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -75,19 +134,42 @@
     }];
 }
 
-
 -(void)outputAccelerationData:(CMAcceleration)acceleration {
     //update text field to current value of accelerometer
     self.accX.text = [NSString stringWithFormat:@"%.2fg", acceleration.x];
+    if(fabs(acceleration.x) > fabs(currentMaxAccX)) {
+        currentMaxAccX = acceleration.x;
+    }
     self.accY.text = [NSString stringWithFormat:@"%.2fg", acceleration.y];
+    if(fabs(acceleration.y) > fabs(currentMaxAccY)) {
+        currentMaxAccY = acceleration.y;
+    }
     self.accY.text = [NSString stringWithFormat:@"%.2fg", acceleration.z];
+    if(fabs(acceleration.z) > fabs(currentMaxAccZ)) {
+        currentMaxAccZ = acceleration.z;
+    }
+    self.maxAccX.text = [NSString stringWithFormat:@" %.2f",currentMaxAccX];
+    self.maxAccY.text = [NSString stringWithFormat:@" %.2f",currentMaxAccY];
+    self.maxAccZ.text = [NSString stringWithFormat:@" %.2f",currentMaxAccZ];
 }
 
 -(void)outputRotationData:(CMRotationRate)rotation {
     //update text field to current value of gryo
     self.rotX.text = [NSString stringWithFormat:@"%.2fr/s", rotation.x];
+    if(fabs(rotation.x) > fabs(currentMaxRotX)) {
+        currentMaxRotX = rotation.x;
+    }
     self.rotY.text = [NSString stringWithFormat:@"%.2fr/s", rotation.y];
+    if(fabs(rotation.y) > fabs(currentMaxRotY)) {
+        currentMaxRotY = rotation.y;
+    }
     self.rotZ.text = [NSString stringWithFormat:@"%.2fr/s", rotation.z];
+    if(fabs(rotation.z) > fabs(currentMaxRotZ)) {
+        currentMaxRotZ = rotation.z;
+    }
+    self.maxRotX.text = [NSString stringWithFormat:@" %.2f",currentMaxRotX];
+    self.maxRotY.text = [NSString stringWithFormat:@" %.2f",currentMaxRotY];
+    self.maxRotZ.text = [NSString stringWithFormat:@" %.2f",currentMaxRotZ];
 }
 
 - (void)didReceiveMemoryWarning {

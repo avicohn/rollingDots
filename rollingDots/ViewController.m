@@ -31,8 +31,6 @@
     
     //to enable multiple touches
     [self.view setMultipleTouchEnabled:YES];
-
-    
     
     //init motionManager for tracking gyro/accelerometer
     self.motionManager =[[CMMotionManager alloc] init];
@@ -63,49 +61,51 @@
 
 #pragma mark function to convert GPS coordinates to real-life address
 
-/*
--(void)update:(CFTimeInterval)currentTime {
+
+-(void)update:(UIView *)ball {
     
     // Called before each frame is rendered
-    
+    float gravity = -9.81;
     //set min and max bounderies
-    float maxY = screenHeight - (self.ball.size.width/2);
-    float minY = 0 + (self.ball.size.width/2);
+    float topBoundary = self.view.bounds.size.height - (ball.frame.size.width/2);
+    float bottomBoundary = 0 + (ball.frame.size.width/2);
     
-    float maxX = screenWidth - (self.ball.size.height/2);
-    float minX = 0 + (self.ball.size.height/2);
+    float rightBoundary = self.view.bounds.size.width - (ball.frame.size.height/2);
+    float leftBoundary = 0 + (ball.frame.size.height/2);
     
     float newY = 0;
     float newX = 0;
-    //left and right tilt
-    if(currentMaxAccelX > 0.05){
-        newX = currentMaxAccelX * -10;
+    //check if left/right tilt is significant, adjust for gravity
+    if(currentMaxAccX > 0.05){
+        newX = currentMaxAccX * gravity;
     }
-    else if(currentMaxAccelX < -0.05){
-        newX = currentMaxAccelX*-10;
+    else if(currentMaxAccX < -0.05){
+        newX = currentMaxAccX * gravity;
     }
     else{
-        newX = currentMaxAccelX*-10;
+        newX = currentMaxAccX * gravity;
     }
     //up and down tilt
-    newY = currentMaxAccelY *10;
+    newY = currentMaxAccY * gravity;
     
-    newX = MIN(MAX(newX+self.ball.position.x,minY),maxY);
-    newY = MIN(MAX(newY+self.ball.position.y,minX),maxX);
+    newX = MIN(MAX(newX + ball.center.x, bottomBoundary),topBoundary);
+    newY = MIN(MAX(newY + ball.center.y, leftBoundary),rightBoundary);
     
-    self.ball.position = CGPointMake(newX, newY);
+    ball.center = CGPointMake(newX, newY);
     
 }
-*/
 
 
+/*
 - (void)updateDotPositionFromMotionManager {
     CMAccelerometerData* data = _motionManager.accelerometerData;
+    //absolute value of acceleration.x
     if (fabs(data.acceleration.x) > 0.2) {
         //NSLog(@"acceleration value = %f",data.acceleration.x);
         //[_ship.physicsBody applyForce:CGVectorMake(0.0, 40.0 * data.acceleration.x)];
     }
 }
+*/
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     int dotRadius = 50;

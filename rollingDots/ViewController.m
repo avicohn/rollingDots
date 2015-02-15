@@ -31,7 +31,8 @@ const static int   dotRadius        = 50;
     frame.size.height = self.view.bounds.size.height;
     frame.size.width = self.view.bounds.size.width;
     UIView *view = [[UIView alloc] initWithFrame:frame];
-    view.backgroundColor = [UIColor greenColor];
+    view.backgroundColor = [UIColor colorWithRed:0.067 green:0.235 blue:0.282 alpha:1]; //#113c48- used webConverter
+
     
     self.surfaceBoundaryView = view;
     
@@ -41,14 +42,13 @@ const static int   dotRadius        = 50;
 
 //  Touch Logic and Accelerometer Method Call 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    int dotRadius = 50;
     // Remove old touches on screen
     NSArray *subviews = [self.surfaceBoundaryView subviews];
     for (UIView *view in subviews) {
         [view removeFromSuperview];
     }
     
-    // Enumerate over all the touches and draw a red dot on the screen where the touches were
+    //draw a dot on  screen where/when touch occurs
     [touches enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
         //create touch object and set the location of touch
         UITouch *touch = obj;
@@ -68,7 +68,7 @@ const static int   dotRadius        = 50;
         
     }];
     [self ballMotionAcceleration:_ballView];
-    
+
     
 }
 
@@ -77,22 +77,24 @@ const static int   dotRadius        = 50;
     NSLog(@"ballMotionAcceleration");
     self.manager = [[CMMotionManager alloc] init];
     self.manager.accelerometerUpdateInterval = 1.0f/FRAME_RATE;
-    CMAccelerometerHandler accelerometerHandler = ^(CMAccelerometerData *data, NSError *error) {[self ballMovment:ball andAccelerationData:data.acceleration];};
+    CMAccelerometerHandler accelerometerHandler = ^(CMAccelerometerData *data, NSError *error) {[self ballMovement:ball andAccelerationData:data.acceleration];};
     [self.manager startAccelerometerUpdatesToQueue:[NSOperationQueue currentQueue]  withHandler:accelerometerHandler];
     
 }
 
--(void)ballMovment:(UIView *)ball andAccelerationData:(CMAcceleration)data {
+-(void)ballMovement:(UIView *)ball andAccelerationData:(CMAcceleration)data {
     //  get current frame location:
     float x = data.x;
     float y = data.y;
     
     //set min and max bounderies
     float bottomBoundary = _surfaceBoundaryView.bounds.size.height - (ball.frame.size.height/2);
+    float notQuiteBottomBoundary = 0.9f * bottomBoundary;
     float topBoundary = ball.frame.size.width/2;
     
     float rightBoundary = _surfaceBoundaryView.bounds.size.width - (ball.frame.size.width/2);
     float leftBoundary = ball.frame.size.height/2;
+
     
     float newY = 0;
     float newX = 0;
@@ -103,14 +105,19 @@ const static int   dotRadius        = 50;
         newX = x * GRAVITY_SCALE;
     }
     
+    //up and down tilt
     if (ABS(y) >= tiltSensitivity) {
         newY = y * -GRAVITY_SCALE;
     }
     NSLog(@"\nx: %f, y: %f\n", x, y);
     
-    
-    newY = MIN(MAX(newY+ball.center.y,topBoundary), bottomBoundary);
-    newX = MIN(MAX(newX+ball.center.x,leftBoundary), rightBoundary);
+    if(y < -0.9) {
+        newY = MIN(MAX(newY+ball.center.y, topBoundary), notQuiteBottomBoundary);
+    }
+    else if (y > -0.9) {
+        newY = MIN(MAX(newY+ball.center.y, topBoundary), bottomBoundary);
+    }
+    newX = MIN(MAX(newX+ball.center.x, leftBoundary), rightBoundary);
     
     //NSLog(@"newX: %f, newY: %f", newX, newY);
     //NSLog(@"horizontal boundary:: %f:%f:: %f  center:: %f: %f",leftBoundary,rightBoundary,newY+ball.center.x, ball.center.x,ball.center.y);
@@ -120,15 +127,37 @@ const static int   dotRadius        = 50;
     
 }
 
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event andBall:(UIView *)ballView {
+    if (motion == UIEventSubtypeMotionShake) {
+        //reset dot
+        NSLog(@"\n\nSHAKE\n\n");
+        [ballView removeFromSuperview];
+    }
+}
+
+-(BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self becomeFirstResponder];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [self resignFirstResponder];
+    [super viewWillDisappear:animated];
+}
+
 //  close the accelerometer updates when the view disappears
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [self.manager stopAccelerometerUpdates];
 }
 
-#pragma mark function to check if ball is in top 10% of screen
+#pragma mark function to check if device is tilted near vertically to allow ball to go to bottom edge of screen
 
-#pragma mark function to check if ball is in bottom 20% of screen
+#pragma mark function to check if ball is in top 20% of screen to display GPS street address on bottom 20% of screen
 
 #pragma mark function to convert GPS coordinates to real-life address
 

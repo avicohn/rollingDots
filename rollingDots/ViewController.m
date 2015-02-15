@@ -29,13 +29,15 @@ const static float tiltSensitivity  = 0.02f;
 const static int   cropRadius       = 25;
 const static int   dotRadius        = 50;
 
+
 //  create "ball" view and attach behaviors
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UILabel *StreetAddress = [[UILabel alloc] initWithFrame:CGRectMake(120, 500, 180, 20)];
-    StreetAddress.textColor = [UIColor whiteColor];
-    StreetAddress.text = @"streetAddress";
-    
+//    UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(120, 500, 180, 20)];
+//    addressLabel.textColor = [UIColor colorWithRed:0.973 green:0.976 blue:0.537 alpha:1]; //#f8f989
+//    addressLabel.text = @"streetAddress";
+//    self.StreetAddress = addressLabel;
+
     locationManager = [[CLLocationManager alloc] init];
     geocoder = [[CLGeocoder alloc] init];
 
@@ -46,12 +48,11 @@ const static int   dotRadius        = 50;
     UIView *view = [[UIView alloc] initWithFrame:frame];
     view.backgroundColor = [UIColor colorWithRed:0.067 green:0.235 blue:0.282 alpha:1]; //#113c48- used webConverter
 
-    
     self.surfaceBoundaryView = view;
     
     [self.view addSubview:_surfaceBoundaryView];
 
-    [self.surfaceBoundaryView addSubview:StreetAddress];
+    //[self.surfaceBoundaryView addSubview:StreetAddress];
 
     
 }
@@ -81,6 +82,7 @@ const static int   dotRadius        = 50;
         //add the view
         self.ballView = ballsView;
         [self.surfaceBoundaryView addSubview:_ballView];
+
         
     }];
     [self ballMotionAcceleration:_ballView];
@@ -140,6 +142,12 @@ const static int   dotRadius        = 50;
         NSLog(@"ball in top edge\n");
         [self getAddress:self];
         //display street address label in bottom 20% of screen
+        UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 460, 200, 100)];
+        addressLabel.textColor = [UIColor whiteColor];
+        addressLabel.numberOfLines = 4;
+        //addressLabel.text = @"streetAddress";
+        
+        self.StreetAddress = addressLabel;
         [self.surfaceBoundaryView addSubview:_StreetAddress];
         
     }
@@ -187,10 +195,10 @@ const static int   dotRadius        = 50;
         if (error == nil && [placemarks count] > 0) {
             placemark = [placemarks lastObject];
             //update street address label
-            //StreetAddress.text = [NSString stringWithFormat:@"%@ %@\n%@ %@\n%@\n%@",
-            //                          placemark.subThoroughfare, placemark.thoroughfare,
-            //                          placemark.postalCode, placemark.locality,
-            //                          placemark.administrativeArea, placemark.country];
+            _StreetAddress.text = [NSString stringWithFormat:@"%@ %@\n%@ %@\n%@\n%@",
+                                      placemark.subThoroughfare, placemark.thoroughfare,
+                                      placemark.postalCode, placemark.locality,
+                                      placemark.administrativeArea, placemark.country];
         } else {
             NSLog(@"%@", error.debugDescription);
         }

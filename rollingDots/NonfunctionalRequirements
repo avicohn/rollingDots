@@ -1,0 +1,7 @@
+1. The dot shall be 50 points in diameter
+2. The dot should react to tilt movement as fluidily and as though gravity was acting upon it
+3. The application should use these hex colors:
+    Background : #113c48
+    Dot : #3882a6
+    Address text : #f8f989
+4.

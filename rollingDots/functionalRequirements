@@ -1,0 +1,7 @@
+1. Upon launching the application, the user should see a blank background
+2. The system shall wait for a touch event to occur to begin activity
+3. If a touch event is received, the system shall draw a dot at touch location and begin activity
+4. The system shall allow the user to tilt device to control the movement of the dot
+5. If the activity has begun, the device shall allow the user to shake the device to reset to background
+6. If activity has begun, the system shall prevent dot from reaching bottom edge unless tilt is ~vertical
+7. if activity has begun, user places dot in top 20% of screen, system shall display street address in bottom 20% of screen

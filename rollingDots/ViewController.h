@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreMotion/CoreMotion.h>
+#import <CoreLocation/CoreLocation.h>
 
 double currentMaxAccX;
 double currentMaxAccY;
@@ -16,7 +17,7 @@ double currentMaxRotX;
 double currentMaxRotY;
 double currentMaxRotZ;
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <CLLocationManagerDelegate>
 
 @property(strong, nonatomic) IBOutlet UILabel *accX;
 @property(strong, nonatomic) IBOutlet UILabel *accY;
@@ -34,7 +35,12 @@ double currentMaxRotZ;
 @property(strong, nonatomic) IBOutlet UILabel *maxRotY;
 @property(strong, nonatomic) IBOutlet UILabel *maxRotZ;
 
+@property (weak, nonatomic) IBOutlet UILabel *StreetAddress;
+
+
 @property(strong, nonatomic) CMMotionManager *motionManager;
+
+- (IBAction)getAddress:(id)sender;
 
 
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		82B768141A907B0200E79C0E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82B768131A907B0200E79C0E /* CoreLocation.framework */; };
 		82EA18DC1A8AC332001BD367 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 82EA18DB1A8AC332001BD367 /* main.m */; };
 		82EA18DF1A8AC332001BD367 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 82EA18DE1A8AC332001BD367 /* AppDelegate.m */; };
 		82EA18E21A8AC332001BD367 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82EA18E11A8AC332001BD367 /* ViewController.m */; };
@@ -27,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		82B768131A907B0200E79C0E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		82EA18D61A8AC332001BD367 /* rollingDots.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rollingDots.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82EA18DA1A8AC332001BD367 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82EA18DB1A8AC332001BD367 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -47,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82B768141A907B0200E79C0E /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +66,7 @@
 		82EA18CD1A8AC331001BD367 = {
 			isa = PBXGroup;
 			children = (
+				82B768131A907B0200E79C0E /* CoreLocation.framework */,
 				82EA18D81A8AC332001BD367 /* rollingDots */,
 				82EA18F21A8AC332001BD367 /* rollingDotsTests */,
 				82EA18D71A8AC332001BD367 /* Products */,

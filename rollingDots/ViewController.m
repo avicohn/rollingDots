@@ -14,7 +14,9 @@
 
 @end
 
-@implementation ViewController
+@implementation ViewController {
+    CLLocationManager *locationManager;
+}
 
 //  some behavior and view constants.
 const static float GRAVITY_SCALE    = 9.81f;
@@ -26,6 +28,7 @@ const static int   dotRadius        = 50;
 //  create "ball" view and attach behaviors
 - (void)viewDidLoad {
     [super viewDidLoad];
+    locationManager = [[CLLocationManager alloc] init];
     CGRect frame;
     frame.origin = CGPointZero;
     frame.size.height = self.view.bounds.size.height;
@@ -89,7 +92,7 @@ const static int   dotRadius        = 50;
     
     //set min and max bounderies
     float bottomBoundary = _surfaceBoundaryView.bounds.size.height - (ball.frame.size.height/2);
-    float notQuiteBottomBoundary = 0.9f * bottomBoundary;
+    float notQuiteBottomBoundary = 0.98f * bottomBoundary;
     float topBoundary = ball.frame.size.width/2;
     
     float rightBoundary = _surfaceBoundaryView.bounds.size.width - (ball.frame.size.width/2);
@@ -111,10 +114,11 @@ const static int   dotRadius        = 50;
     }
     NSLog(@"\nx: %f, y: %f\n", x, y);
     
-    if(y < -0.9) {
+    //is device nearly vertical?
+    if(y > -0.9) {
         newY = MIN(MAX(newY+ball.center.y, topBoundary), notQuiteBottomBoundary);
     }
-    else if (y > -0.9) {
+    else if (y < -0.9) {
         newY = MIN(MAX(newY+ball.center.y, topBoundary), bottomBoundary);
     }
     newX = MIN(MAX(newX+ball.center.x, leftBoundary), rightBoundary);
@@ -125,6 +129,45 @@ const static int   dotRadius        = 50;
     ball.center = CGPointMake(newX, newY);
     [self.surfaceBoundaryView setNeedsDisplay];
     
+}
+
+- (IBAction)getAddress:(id)sender {
+    [locationManager requestWhenInUseAuthorization];
+    
+    locationManager.delegate = self;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    
+    //viewController is delegate object to updateLocation
+    if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [locationManager requestWhenInUseAuthorization];
+    }
+    [locationManager startUpdatingLocation];
+    NSLog(@"locationManager began \n");
+    
+}
+//locationManager delegate
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    NSLog(@"didFailWithError: %@", error);
+    UIAlertView *errorAlert = [[UIAlertView alloc]
+                               initWithTitle:@"Error" message:@"Failed to Get Your Location" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [errorAlert show];
+}
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    NSLog(@"GPS%@", [locations lastObject]);
+    
+    NSLog(@"didUpdateToLocation: %@", locations); //newLocation);
+    CLLocation *currentLocation = [locations lastObject]; //newLocation;
+    NSLog(@"currentLocation: %@", currentLocation);
+    //store long and lat data
+    //currentLocation.coordinate.longitude
+    //currentLocation.coordinate.latitude
+    
+    //convert to street address
+    
+    //update street address label
+    
+    //display street address label in bottom 20% of screen
+    [self.view setNeedsDisplay];
 }
 
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {

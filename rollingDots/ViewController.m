@@ -16,6 +16,8 @@
 
 @implementation ViewController {
     CLLocationManager *locationManager;
+    CLGeocoder *geocoder;
+    CLPlacemark *placemark;
 }
 
 //  some behavior and view constants.
@@ -29,6 +31,8 @@ const static int   dotRadius        = 50;
 - (void)viewDidLoad {
     [super viewDidLoad];
     locationManager = [[CLLocationManager alloc] init];
+    geocoder = [[CLGeocoder alloc] init];
+
     CGRect frame;
     frame.origin = CGPointZero;
     frame.size.height = self.view.bounds.size.height;
@@ -97,11 +101,9 @@ const static int   dotRadius        = 50;
     
     float rightBoundary = _surfaceBoundaryView.bounds.size.width - (ball.frame.size.width/2);
     float leftBoundary = ball.frame.size.height/2;
-
     
     float newY = 0;
     float newX = 0;
-    
     
     //left and right tilt
     if (ABS(x) >= tiltSensitivity) {
@@ -125,7 +127,9 @@ const static int   dotRadius        = 50;
     
     //NSLog(@"newX: %f, newY: %f", newX, newY);
     //NSLog(@"horizontal boundary:: %f:%f:: %f  center:: %f: %f",leftBoundary,rightBoundary,newY+ball.center.x, ball.center.x,ball.center.y);
-    
+    if (newY < 0.2 * bottomBoundary) {
+        NSLog(@"ball in top edge\n");
+    }
     ball.center = CGPointMake(newX, newY);
     [self.surfaceBoundaryView setNeedsDisplay];
     
@@ -159,12 +163,27 @@ const static int   dotRadius        = 50;
     CLLocation *currentLocation = [locations lastObject]; //newLocation;
     NSLog(@"currentLocation: %@", currentLocation);
     //store long and lat data
-    //currentLocation.coordinate.longitude
-    //currentLocation.coordinate.latitude
+    float longitude = currentLocation.coordinate.longitude;
+    float latitude = currentLocation.coordinate.latitude;
+    NSLog(@"long: %f, lat: %f", longitude, latitude);
+
     
     //convert to street address
-    
-    //update street address label
+    //reverse geocode
+    [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
+        NSLog(@"Found placemarks: %@, error: %@", placemarks, error);
+        if (error == nil && [placemarks count] > 0) {
+            placemark = [placemarks lastObject];
+            //update street address label
+            _StreetAddress.text = [NSString stringWithFormat:@"%@ %@\n%@ %@\n%@\n%@",
+                                      placemark.subThoroughfare, placemark.thoroughfare,
+                                      placemark.postalCode, placemark.locality,
+                                      placemark.administrativeArea,
+                                      placemark.country];
+        } else {
+            NSLog(@"%@", error.debugDescription);
+        }
+    } ];
     
     //display street address label in bottom 20% of screen
     [self.view setNeedsDisplay];

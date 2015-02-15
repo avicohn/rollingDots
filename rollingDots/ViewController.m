@@ -127,11 +127,11 @@ const static int   dotRadius        = 50;
     
 }
 
-- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event andBall:(UIView *)ballView {
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
     if (motion == UIEventSubtypeMotionShake) {
         //reset dot
         NSLog(@"\n\nSHAKE\n\n");
-        [ballView removeFromSuperview];
+        [_ballView removeFromSuperview];
     }
 }
 

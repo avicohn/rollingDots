@@ -10,6 +10,8 @@
 @property (weak, nonatomic) IBOutlet UIView *surfaceBoundaryView;
 @property (weak, nonatomic) IBOutlet UIView *ballView;
 
+@property (weak, nonatomic) UILabel *StreetAddress;
+
 @property (strong,nonatomic) CMMotionManager *manager;
 
 @end
@@ -30,6 +32,10 @@ const static int   dotRadius        = 50;
 //  create "ball" view and attach behaviors
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UILabel *StreetAddress = [[UILabel alloc] initWithFrame:CGRectMake(120, 500, 180, 20)];
+    StreetAddress.textColor = [UIColor whiteColor];
+    StreetAddress.text = @"streetAddress";
+    
     locationManager = [[CLLocationManager alloc] init];
     geocoder = [[CLGeocoder alloc] init];
 
@@ -44,6 +50,9 @@ const static int   dotRadius        = 50;
     self.surfaceBoundaryView = view;
     
     [self.view addSubview:_surfaceBoundaryView];
+
+    [self.surfaceBoundaryView addSubview:StreetAddress];
+
     
 }
 
@@ -129,6 +138,10 @@ const static int   dotRadius        = 50;
     //NSLog(@"horizontal boundary:: %f:%f:: %f  center:: %f: %f",leftBoundary,rightBoundary,newY+ball.center.x, ball.center.x,ball.center.y);
     if (newY < 0.2 * bottomBoundary) {
         NSLog(@"ball in top edge\n");
+        [self getAddress:self];
+        //display street address label in bottom 20% of screen
+        [self.surfaceBoundaryView addSubview:_StreetAddress];
+        
     }
     ball.center = CGPointMake(newX, newY);
     [self.surfaceBoundaryView setNeedsDisplay];
@@ -159,7 +172,7 @@ const static int   dotRadius        = 50;
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     NSLog(@"GPS%@", [locations lastObject]);
     
-    NSLog(@"didUpdateToLocation: %@", locations); //newLocation);
+    NSLog(@"didUpdateLocation: %@\n", locations); //newLocation);
     CLLocation *currentLocation = [locations lastObject]; //newLocation;
     NSLog(@"currentLocation: %@", currentLocation);
     //store long and lat data
@@ -168,24 +181,22 @@ const static int   dotRadius        = 50;
     NSLog(@"long: %f, lat: %f", longitude, latitude);
 
     
-    //convert to street address
-    //reverse geocode
+    //convert to street address (reverse geocode)
     [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
         NSLog(@"Found placemarks: %@, error: %@", placemarks, error);
         if (error == nil && [placemarks count] > 0) {
             placemark = [placemarks lastObject];
             //update street address label
-            _StreetAddress.text = [NSString stringWithFormat:@"%@ %@\n%@ %@\n%@\n%@",
-                                      placemark.subThoroughfare, placemark.thoroughfare,
-                                      placemark.postalCode, placemark.locality,
-                                      placemark.administrativeArea,
-                                      placemark.country];
+            //StreetAddress.text = [NSString stringWithFormat:@"%@ %@\n%@ %@\n%@\n%@",
+            //                          placemark.subThoroughfare, placemark.thoroughfare,
+            //                          placemark.postalCode, placemark.locality,
+            //                          placemark.administrativeArea, placemark.country];
         } else {
             NSLog(@"%@", error.debugDescription);
         }
     } ];
     
-    //display street address label in bottom 20% of screen
+
     [self.view setNeedsDisplay];
 }
 

@@ -10,6 +10,7 @@
 		82B768141A907B0200E79C0E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82B768131A907B0200E79C0E /* CoreLocation.framework */; };
 		82B768161A9155E500E79C0E /* functionalRequirements in Resources */ = {isa = PBXBuildFile; fileRef = 82B768151A9155E500E79C0E /* functionalRequirements */; };
 		82B768181A91582300E79C0E /* NonfunctionalRequirements in Resources */ = {isa = PBXBuildFile; fileRef = 82B768171A91582300E79C0E /* NonfunctionalRequirements */; };
+		82B7681A1A91720800E79C0E /* UseCases in Resources */ = {isa = PBXBuildFile; fileRef = 82B768191A91720800E79C0E /* UseCases */; };
 		82EA18DC1A8AC332001BD367 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 82EA18DB1A8AC332001BD367 /* main.m */; };
 		82EA18DF1A8AC332001BD367 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 82EA18DE1A8AC332001BD367 /* AppDelegate.m */; };
 		82EA18E21A8AC332001BD367 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82EA18E11A8AC332001BD367 /* ViewController.m */; };
@@ -33,6 +34,7 @@
 		82B768131A907B0200E79C0E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		82B768151A9155E500E79C0E /* functionalRequirements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = functionalRequirements; sourceTree = "<group>"; };
 		82B768171A91582300E79C0E /* NonfunctionalRequirements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NonfunctionalRequirements; sourceTree = "<group>"; };
+		82B768191A91720800E79C0E /* UseCases */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = UseCases; path = ../UseCases; sourceTree = "<group>"; };
 		82EA18D61A8AC332001BD367 /* rollingDots.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rollingDots.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82EA18DA1A8AC332001BD367 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82EA18DB1A8AC332001BD367 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 				82EA18D91A8AC332001BD367 /* Supporting Files */,
 				82B768151A9155E500E79C0E /* functionalRequirements */,
 				82B768171A91582300E79C0E /* NonfunctionalRequirements */,
+				82B768191A91720800E79C0E /* UseCases */,
 			);
 			path = rollingDots;
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82B7681A1A91720800E79C0E /* UseCases in Resources */,
 				82B768181A91582300E79C0E /* NonfunctionalRequirements in Resources */,
 				82EA18E51A8AC332001BD367 /* Main.storyboard in Resources */,
 				82B768161A9155E500E79C0E /* functionalRequirements in Resources */,

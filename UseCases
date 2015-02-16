@@ -1,0 +1,6 @@
+1. The user launches the app and taps the screen to begin activity.
+2. In activity, the user controls the dot via tilt mechanism.
+3. In activity, the user may tap the screen to reset dot.
+4. In activity, the user may control the dot to the top of screen to display street address at bottom of screen.
+5. In activity, the user may control the dot to the bottom of the screen, but must tilt the device nearly vertical to ensure it touches the bottom of screen.
+6. In activity, the user may shake the device to clear activity. 
